@@ -1,6 +1,7 @@
 package com.example.waste.service;
 
 import com.example.waste.model.WasteBin;
+import com.example.waste.model.WasteBinStatus;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +75,15 @@ public class WasteBinService {
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    void updateWasteBin(WasteBinStatus wasteBinStatus) {
+        WasteBin wasteBin = getWasteBin(wasteBinStatus.getWasteBin().getId());
+        wasteBin.setFullnessLevel(wasteBinStatus.getFullnessLevel());
+        wasteBin.setFilled(wasteBinStatus.getFullnessLevel() >= WasteBin.FILLED_LIMIT);
+        wasteBin.setLastUpdate(Instant.now());
+        wasteBinStatus.setWasteBin(wasteBin);
+        createWasteBin(wasteBin);
     }
 
     private WasteBin mapToWasteBin(DocumentSnapshot data){

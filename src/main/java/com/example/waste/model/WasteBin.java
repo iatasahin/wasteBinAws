@@ -10,6 +10,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WasteBin {
+    public static final int FILLED_LIMIT = 75;
     private Long id;
     private double latitude;
     private double longitude;
