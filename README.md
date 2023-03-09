@@ -39,8 +39,7 @@ creates a waste bin, example body:
 {
   "id":10,
   "latitude": 28.14306,
-  "longitude": 20.7643,
-  "filled": false
+  "longitude": 20.7643
 }
 
 ### GET /wastebin/{id}

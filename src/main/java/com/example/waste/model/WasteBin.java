@@ -14,7 +14,6 @@ public class WasteBin {
     private Long id;
     private double latitude;
     private double longitude;
-    private boolean filled;
     private int fullnessLevel;
     private Instant lastUpdate;
 }
