@@ -16,4 +16,5 @@ public class WasteBin {
     private double longitude;
     private int fullnessLevel;
     private Instant lastUpdate;
+    private String secretBase32;
 }

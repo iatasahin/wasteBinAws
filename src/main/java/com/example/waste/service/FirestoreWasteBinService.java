@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 @AllArgsConstructor
-public class WasteBinService {
+public class FirestoreWasteBinService {
     private Firestore firestore;
 
     public WasteBin createWasteBin(WasteBin wasteBin) {
@@ -85,7 +85,8 @@ public class WasteBinService {
                 location.getLatitude(),
                 location.getLongitude(),
                 data.getLong("fullness").intValue(),
-                lastUpdate == null ? Instant.EPOCH : lastUpdate.toDate().toInstant()
+                lastUpdate == null ? Instant.EPOCH : lastUpdate.toDate().toInstant(),
+                data.getString("secret")
         );
     }
 
@@ -97,6 +98,7 @@ public class WasteBinService {
         data.put("location", location);
         Timestamp lastUpdateTime = Timestamp.of(Date.from(wasteBin.getLastUpdate()));
         data.put("lastUpdate", lastUpdateTime);
+        data.put("secret", wasteBin.getSecretBase32());
 
         return data;
     }

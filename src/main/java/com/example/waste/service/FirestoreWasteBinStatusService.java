@@ -12,11 +12,11 @@ import java.util.Map;
 
 @Service
 @AllArgsConstructor
-public class WasteBinStatusService {
-    private WasteBinService wasteBinService;
+public class FirestoreWasteBinStatusService {
+    private FirestoreWasteBinService firestoreWasteBinService;
 
     public WasteBinStatus createWasteBinStatus(WasteBinStatus wasteBinStatus){
-        CollectionReference statusHistoryCollection = wasteBinService
+        CollectionReference statusHistoryCollection = firestoreWasteBinService
                 .updateWasteBin(wasteBinStatus)
                 .collection("BinHistory");
         Map<String, Object> data = new HashMap<>();
