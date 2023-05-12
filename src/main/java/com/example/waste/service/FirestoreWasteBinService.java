@@ -49,11 +49,31 @@ public class FirestoreWasteBinService {
         }
     }
 
+    public List<WasteBin> getAllWasteBins() {
+        Query query = firestore
+                .collection("WasteBin")
+                .orderBy("id");
+
+        return getWasteBins(query);
+    }
+
+    public List<WasteBin> getWasteBinsByFullness(int fullness){
+        Query query = firestore
+                .collection("WasteBin")
+                .whereGreaterThanOrEqualTo("fullness", fullness);
+
+        return getWasteBins(query);
+    }
+
     public List<WasteBin> getFilledWasteBins() {
         Query query = firestore
                 .collection("WasteBin")
                 .whereGreaterThanOrEqualTo("fullness", WasteBin.FILLED_LIMIT);
 
+        return getWasteBins(query);
+    }
+
+    private List<WasteBin> getWasteBins(Query query) {
         ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
         try {
