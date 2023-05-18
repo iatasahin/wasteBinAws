@@ -49,9 +49,9 @@ public class TotpController {
 
     @PostMapping("/totp")
     public ResponseEntity<TotpResponse> createTotp(@RequestBody TotpRequest totpRequest) throws CodeGenerationException {
-        if (! validationService.validate(totpRequest.getApiKey())){
-            throw new ValidApiKeyIsRequiredException();
-        }
+//        if (! validationService.validate(totpRequest.getApiKey())){
+//            throw new ValidApiKeyIsRequiredException();
+//        }
         WasteBin wasteBin = firestoreWasteBinService.getWasteBin(totpRequest.getWasteBinId());
 
         TotpResponse totp = totpService.generateTotp(wasteBin);

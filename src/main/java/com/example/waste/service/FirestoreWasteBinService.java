@@ -106,7 +106,8 @@ public class FirestoreWasteBinService {
                 location.getLongitude(),
                 data.getLong("fullness").intValue(),
                 lastUpdate == null ? Instant.EPOCH : lastUpdate.toDate().toInstant(),
-                data.getString("secret")
+                data.getString("secret"),
+                data.getBoolean("medicalWaste")
         );
     }
 
@@ -119,6 +120,7 @@ public class FirestoreWasteBinService {
         Timestamp lastUpdateTime = Timestamp.of(Date.from(wasteBin.getLastUpdate()));
         data.put("lastUpdate", lastUpdateTime);
         data.put("secret", wasteBin.getSecretBase32());
+        data.put("medicalWaste", wasteBin.isMedicalWaste());
 
         return data;
     }

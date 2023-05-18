@@ -20,24 +20,29 @@ public class WasteBinController {
 
     @PostMapping("/wastebin")
     WasteBin postWasteBin(@RequestBody WasteBin wasteBin, @PathParam("") String api_key) {
-        if (!validationService.validate(api_key))
-            throw new ValidApiKeyIsRequiredException();
+//        if (!validationService.validate(api_key))
+//            throw new ValidApiKeyIsRequiredException();
         if (wasteBin.getLastUpdate() == null)
             wasteBin.setLastUpdate(Instant.now());
         return firestoreWasteBinService.createWasteBin(wasteBin);
     }
 
+    @GetMapping("/wastebin")
+    List<WasteBin> allWasteBins(){
+        return firestoreWasteBinService.getAllWasteBins();
+    }
+
     @GetMapping("/wastebin/filled")
     List<WasteBin> getFilledWasteBins(@PathParam("") String api_key) {
-        if (!validationService.validate(api_key))
-            throw new ValidApiKeyIsRequiredException();
+//        if (!validationService.validate(api_key))
+//            throw new ValidApiKeyIsRequiredException();
         return firestoreWasteBinService.getFilledWasteBins();
     }
 
     @GetMapping("/wastebin/{id}")
     WasteBin getWasteBin(@PathVariable Long id, @PathParam("") String api_key) {
-        if (!validationService.validate(api_key))
-            throw new ValidApiKeyIsRequiredException();
+//        if (!validationService.validate(api_key))
+//            throw new ValidApiKeyIsRequiredException();
         return firestoreWasteBinService.getWasteBin(id);
     }
 }
