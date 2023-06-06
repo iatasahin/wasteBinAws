@@ -55,6 +55,8 @@ public class TspPersistenceService {
 
     List<Location> findLocations(List<WasteBin> filledWasteBins) {
         List<Location> locations = new ArrayList<>();
+
+        locations.add(locationRepository.findByFirebaseId(-1L).get());
         for (WasteBin w : filledWasteBins) {
             Optional<Location> optionalLocation = locationRepository.findByFirebaseId(w.getId());
             if (optionalLocation.isEmpty()) {

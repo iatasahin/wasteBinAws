@@ -100,6 +100,7 @@ public class FirestoreWasteBinService {
     private WasteBin mapToWasteBin(DocumentSnapshot data) {
         GeoPoint location = data.getGeoPoint("location");
         Timestamp lastUpdate = data.getTimestamp("lastUpdate");
+        String userId = data.getString("lastAccessedUserId");
         return new WasteBin(
                 Long.parseLong(data.getString("id")),
                 location.getLatitude(),
@@ -107,7 +108,8 @@ public class FirestoreWasteBinService {
                 data.getLong("fullness").intValue(),
                 lastUpdate == null ? Instant.EPOCH : lastUpdate.toDate().toInstant(),
                 data.getString("secret"),
-                data.getBoolean("medicalWaste")
+                data.getBoolean("medicalWaste"),
+                userId == null ? null : Long.parseLong(userId)
         );
     }
 
@@ -121,6 +123,7 @@ public class FirestoreWasteBinService {
         data.put("lastUpdate", lastUpdateTime);
         data.put("secret", wasteBin.getSecretBase32());
         data.put("medicalWaste", wasteBin.isMedicalWaste());
+        data.put("lastAccessedUserId", "" + wasteBin.getLastAccessedUserId());
 
         return data;
     }

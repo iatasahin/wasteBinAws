@@ -48,7 +48,8 @@ public class TspRouteService {
         for (int i : locationRouteByIndex) {
             result.add(locations.get(i).getFirebaseId());
         }
-
+        result.remove(result.size() - 1);
+        result.remove(0);
         return result;
     }
 

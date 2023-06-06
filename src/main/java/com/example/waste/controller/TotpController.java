@@ -53,6 +53,8 @@ public class TotpController {
 //            throw new ValidApiKeyIsRequiredException();
 //        }
         WasteBin wasteBin = firestoreWasteBinService.getWasteBin(totpRequest.getWasteBinId());
+        wasteBin.setLastAccessedUserId(Long.parseLong(totpRequest.getUserId()));
+        firestoreWasteBinService.createWasteBin(wasteBin);
 
         TotpResponse totp = totpService.generateTotp(wasteBin);
 
