@@ -51,7 +51,9 @@ public class RebateController {
             String barcode = barcodeScannerService.scan(inputStream);
 
             WasteTracking wasteTracking = new WasteTracking(
-                    null, wasteBinId, wasteBin.getLastAccessedUserId(), barcode, Instant.now()
+                    null,
+                    2L, // todo
+                    wasteBinId, wasteBin.getLastAccessedUserId(), barcode, Instant.now()
             );
             firestoreWasteTrackingService.createWasteTracking(wasteTracking);
 

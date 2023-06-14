@@ -36,6 +36,7 @@ public class FirestoreWasteTrackingService {
     private Map<String, Object> wasteTrackingToMap(WasteTracking wasteTracking) {
         Map<String, Object> data = new HashMap<>();
         data.put("trackingID", "" + wasteTracking.getTrackingId());
+        data.put("typeID", "" + wasteTracking.getTypeId());
         data.put("wasteBinID", "" + wasteTracking.getWasteBinId());
         data.put("userID", "" + wasteTracking.getUserId());
         data.put("wasteBarcode", wasteTracking.getWasteBarcode());

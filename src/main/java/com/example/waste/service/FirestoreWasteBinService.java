@@ -109,6 +109,7 @@ public class FirestoreWasteBinService {
                 lastUpdate == null ? Instant.EPOCH : lastUpdate.toDate().toInstant(),
                 data.getString("secret"),
                 data.getBoolean("medicalWaste"),
+                data.getString("roleID"),
                 userId == null ? null : Long.parseLong(userId)
         );
     }
@@ -123,6 +124,7 @@ public class FirestoreWasteBinService {
         data.put("lastUpdate", lastUpdateTime);
         data.put("secret", wasteBin.getSecretBase32());
         data.put("medicalWaste", wasteBin.isMedicalWaste());
+        data.put("roleID", wasteBin.getRoleID());
         data.put("lastAccessedUserId", "" + wasteBin.getLastAccessedUserId());
 
         return data;

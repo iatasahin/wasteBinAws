@@ -27,6 +27,7 @@ public class TotpController {
     private ValidationService validationService;
     private TotpService totpService;
     private FirestoreWasteBinService firestoreWasteBinService;
+    private InstantHolder mcuEpoch;
 
     @GetMapping("/newsecret")
     public ResponseEntity<String> getNewSecret() {
@@ -35,7 +36,7 @@ public class TotpController {
 
     @GetMapping("/time")
     public ResponseEntity<String> getSecondsAfterEpoch(){
-        return ResponseEntity.ok("Time:" + Instant.now().getEpochSecond());
+        return ResponseEntity.ok("Time:" + getCalculatedTimeInSeconds());
     }
 
     @GetMapping("/totptest")
@@ -56,8 +57,16 @@ public class TotpController {
         wasteBin.setLastAccessedUserId(Long.parseLong(totpRequest.getUserId()));
         firestoreWasteBinService.createWasteBin(wasteBin);
 
-        TotpResponse totp = totpService.generateTotp(wasteBin);
+        TotpResponse totp = totpService.generateTotp(wasteBin, getCalculatedTimeInSeconds());
 
         return ResponseEntity.ok(totp);
+    }
+    @GetMapping("/totp/resettime")
+    public ResponseEntity<String> resetTime(){
+        mcuEpoch.setInstant(Instant.now());
+        return ResponseEntity.ok(mcuEpoch.getInstant().toString());
+    }
+    private long getCalculatedTimeInSeconds(){
+        return Instant.now().getEpochSecond() - mcuEpoch.getInstant().getEpochSecond();
     }
 }

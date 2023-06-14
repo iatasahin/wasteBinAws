@@ -7,8 +7,6 @@ import dev.samstevens.totp.exceptions.CodeGenerationException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-
 @Service
 @AllArgsConstructor
 public class TotpService {
@@ -19,11 +17,11 @@ public class TotpService {
         return codeGenerator.generate(secret, secondsAfterEpoch / 30);
     }
 
-    public TotpResponse generateTotp(WasteBin wasteBin) throws CodeGenerationException {
+    public TotpResponse generateTotp(WasteBin wasteBin, long timeInSeconds) throws CodeGenerationException {
         return new TotpResponse(
                 generateTotp(
                         wasteBin.getSecretBase32(),
-                        Instant.now().getEpochSecond()
+                        timeInSeconds
                 ), wasteBin.getId()
         );
     }

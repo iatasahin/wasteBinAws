@@ -18,5 +18,6 @@ public class WasteBin {
     private Instant lastUpdate;
     private String secretBase32;
     private boolean medicalWaste;
+    private String roleID;
     private Long lastAccessedUserId;
 }
