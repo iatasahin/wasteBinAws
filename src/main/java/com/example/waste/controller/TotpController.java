@@ -13,10 +13,7 @@ import dev.samstevens.totp.secret.SecretGenerator;
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 
@@ -61,12 +58,21 @@ public class TotpController {
 
         return ResponseEntity.ok(totp);
     }
+
+    @GetMapping("/totp")
+    public String createTotp(@RequestParam Integer wasteId) throws CodeGenerationException {
+        WasteBin wasteBin = firestoreWasteBinService.getWasteBin(wasteId.longValue());
+
+        TotpResponse totp = totpService.generateTotp(wasteBin, getCalculatedTimeInSeconds());
+
+        return totp.getTotp();
+    }
     @GetMapping("/totp/resettime")
     public ResponseEntity<String> resetTime(){
         mcuEpoch.setInstant(Instant.now());
         return ResponseEntity.ok(mcuEpoch.getInstant().toString());
     }
     private long getCalculatedTimeInSeconds(){
-        return Instant.now().getEpochSecond() - mcuEpoch.getInstant().getEpochSecond();
+        return Instant.now().getEpochSecond();
     }
 }
