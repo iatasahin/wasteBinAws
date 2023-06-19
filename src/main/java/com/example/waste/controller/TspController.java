@@ -26,12 +26,12 @@ public class TspController {
     private TspRouteService tspRouteService;
     private LocationRepository locationRepository;
 
-    @GetMapping("/syncfirebase")
+//    @GetMapping("/syncfirebase")
     SyncResponse syncFirebase(){
         return tspPersistenceService.syncFirebase();
     }
 
-    @GetMapping("/getdistances")
+//    @GetMapping("/getdistances")
     String requestDistances() throws IOException, InterruptedException, ApiException {
         return tspDistanceService.requestDistances();
     }
@@ -41,7 +41,7 @@ public class TspController {
         return tspRouteService.findShortestRoute(fullness != null ? fullness : 0);
     }
 
-    @GetMapping("/startingpoint")
+//    @GetMapping("/startingpoint")
     void setStartingPoint(@RequestParam double latitude, @RequestParam double longitude){
         Optional<Location> optionalLocation = locationRepository.findByFirebaseId(-1L);
         Location location;

@@ -75,12 +75,12 @@ public class RebateController {
         }
     }
 
-    @GetMapping("/rebate/images")
+//    @GetMapping("/rebate/images")
     List<ImageDetails> getImageDetails(@RequestParam("waste_bin") Long wasteBinId) {
         return rebateImageService.getImageDetails(wasteBinId);
     }
 
-    @GetMapping("/rebate/image")
+//    @GetMapping("/rebate/image")
     ResponseEntity<byte[]> getImage(@RequestParam UUID uuid) {
 
         byte[] image = rebateImageRepository.findById(uuid).get().getImage();
